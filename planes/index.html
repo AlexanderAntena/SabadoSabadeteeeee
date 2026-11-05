@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nuestro sábado</title>
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Caveat:wght@500;700&display=swap">
+<style>
+/* Layout: una entrada de "función doble" — cabecera de cartel, nota a mano, y talonario de planes para arrancar */
+:root{
+  --paper:#F6E3E6; --paper-2:#FBF1F2; --ink:#3A0F1E; --wine:#8E1B3A; --rose:#E6738F; --line:#D9A9B5;
+  --display:"Bricolage Grotesque", "Arial Narrow", system-ui, sans-serif;
+  --hand:"Caveat", "Segoe Print", "Bradley Hand", cursive;
+  --body:"Bricolage Grotesque", system-ui, -apple-system, sans-serif;
+  color-scheme:light;
+}
+html,body{background:var(--paper);color:var(--ink)}
+body{font-family:var(--body);font-size:17px;line-height:1.5;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:520px;margin:0 auto;padding-block:28px 56px;display:flex;flex-direction:column;gap:28px}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--wine);font-weight:700}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(44px,13vw,72px);line-height:.92;letter-spacing:-.03em;margin:0;text-wrap:balance}
+h1 em{font-style:normal;color:var(--wine)}
+.date{display:flex;align-items:center;gap:12px;font-weight:700;font-size:15px}
+.date span{border:2px solid var(--ink);border-radius:999px;padding:4px 12px}
+.note{font-family:var(--hand);font-size:27px;line-height:1.2;color:var(--ink);margin:0;transform:rotate(-1.2deg)}
+.note .sig{display:block;text-align:right;color:var(--wine);margin-top:6px}
+h2{font-family:var(--display);font-size:24px;margin:0;letter-spacing:-.01em}
+.hint{margin:4px 0 0;color:var(--wine);font-size:15px}
+.tickets{display:flex;flex-direction:column;gap:14px;padding:0;margin:0;list-style:none}
+.ticket{display:grid;grid-template-columns:1fr 64px;background:var(--paper-2);border-radius:14px;cursor:pointer;position:relative;transition:transform .15s ease, background .15s ease;-webkit-tap-highlight-color:transparent}
+.ticket:focus-visible{outline:3px solid var(--wine);outline-offset:3px}
+.ticket .main{padding:16px 14px 16px 18px;min-width:0;display:flex;flex-direction:column;gap:4px}
+.ticket .kind{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--wine);font-weight:700}
+.ticket .name{font-family:var(--display);font-weight:700;font-size:20px;line-height:1.15}
+.ticket .desc{font-size:15px;color:#6b3a49}
+.ticket .stub{border-left:2px dashed var(--line);display:grid;place-items:center;font-family:var(--display);font-weight:800;color:var(--line);font-size:13px;writing-mode:vertical-rl;letter-spacing:.15em;text-transform:uppercase}
+.ticket::before,.ticket::after{content:"";position:absolute;right:56px;width:16px;height:16px;border-radius:50%;background:var(--paper)}
+.ticket::before{top:-8px}.ticket::after{bottom:-8px}
+.ticket[aria-pressed="true"]{background:var(--wine);color:var(--paper-2);transform:rotate(-.8deg)}
+.ticket[aria-pressed="true"] .kind,.ticket[aria-pressed="true"] .desc{color:#F6CBD5}
+.ticket[aria-pressed="true"] .stub{color:var(--paper-2);border-left-color:#C25A75}
+.ticket[aria-pressed="true"]::before,.ticket[aria-pressed="true"]::after{background:var(--paper)}
+.go{font-family:var(--display);font-weight:800;font-size:19px;border:0;border-radius:999px;padding:16px 22px;background:var(--ink);color:var(--paper-2);cursor:pointer}
+.go:disabled{opacity:.35;cursor:not-allowed}
+.go:focus-visible,.btn:focus-visible{outline:3px solid var(--rose);outline-offset:3px}
+.result{background:var(--paper-2);border-radius:18px;padding:22px 20px;display:flex;flex-direction:column;gap:14px;border:2px solid var(--ink)}
+.result h3{font-family:var(--display);font-size:26px;margin:0;line-height:1.1}
+.result ul{margin:0;padding-left:20px}
+.result li{font-weight:700}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+.btn{font-family:var(--body);font-weight:700;font-size:16px;border-radius:999px;padding:12px 18px;border:2px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;text-decoration:none;display:inline-block}
+.btn.primary{background:var(--wine);border-color:var(--wine);color:var(--paper-2)}
+.small{font-size:14px;color:#6b3a49;margin:0}
+footer{font-family:var(--hand);font-size:24px;text-align:center;color:var(--wine)}
+
+.intro{font-family:var(--hand);font-size:28px;line-height:1.22;margin:0}
+.q{background:var(--paper-2);border-radius:18px;padding:22px 18px;display:flex;flex-direction:column;gap:12px;border:2px solid var(--ink)}
+.q h2{font-size:23px;line-height:1.2;text-wrap:balance}
+.ans{font-family:var(--display);font-weight:800;font-size:17px;line-height:1.25;text-align:left;border:0;border-radius:14px;padding:14px 16px;background:var(--wine);color:var(--paper-2);cursor:pointer;overflow-wrap:anywhere}
+.ans:nth-of-type(2){background:var(--ink)}
+.ans:focus-visible{outline:3px solid var(--rose);outline-offset:3px}
+.ans.chosen{box-shadow:0 0 0 3px var(--paper-2),0 0 0 6px var(--rose)}
+.tiny{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#8a5a68;margin:0;text-align:center}
+.collage{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.collage figure{margin:0;background:#fff;padding:6px 6px 22px;border-radius:4px;box-shadow:0 6px 18px rgba(58,15,30,.18)}
+.collage img{display:block;width:100%;height:100%;object-fit:cover;border-radius:2px}
+.collage .tall{grid-row:span 2;transform:rotate(1.5deg)}
+.collage .a{transform:rotate(-2deg)}
+.collage .b{transform:rotate(1deg)}
+.collage .wide{grid-column:1/-1;transform:rotate(-.8deg)}
+.cap{font-family:var(--hand);font-size:26px;text-align:center;color:var(--wine);margin:6px 0 0}
+.reveal{display:flex;flex-direction:column;gap:28px}
+.reveal.in{animation:up .6s ease both}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.reveal.in{animation:none}.collage figure{transform:none}}
+@media (prefers-reduced-motion:reduce){.ticket{transition:none}.ticket[aria-pressed="true"]{transform:none}.note{transform:none}}
+</style>
+<style>
+.ticket .steps{margin:6px 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px}
+.ticket .steps li{font-size:14px;font-weight:700;border:1.5px solid currentColor;border-radius:999px;padding:3px 10px;opacity:.85}
+.ticket[aria-pressed="true"] .steps li{border-color:#F6CBD5}
+.ticket .name{font-size:21px}
+.ticket .desc{margin-top:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Para mi cuchifleti</div>
+    <h1>Elige nuestro <em>sábado</em></h1>
+    <div class="date"><span>Sábado 7 nov</span></div>
+  </header>
+
+  <section>
+    <h2>Escoge una entrada</h2>
+    <p class="hint">Todas acaban igual: con una partida de billar.</p>
+  </section>
+
+  <ul class="tickets" id="tickets"></ul>
+
+  <button class="go" id="go" disabled>Elige una opción</button>
+
+  <div class="result" id="result" hidden>
+    <h3>¡Plan confirmado!</h3>
+    <p class="small">Has elegido:</p>
+    <p id="picked" style="margin:0;font-weight:700"></p>
+    <div class="actions">
+      <a class="btn primary" id="wa" href="#" target="_blank" rel="noopener">Enviárselo por WhatsApp</a>
+      <button class="btn" id="copy">Copiar</button>
+      <button class="btn" id="again">Cambiar</button>
+    </div>
+    <p class="small" id="copied" aria-live="polite"></p>
+  </div>
+
+  <footer>Te quiero ♥</footer>
+</div>
+
+<script>
+const PLANES = [
+  {kind:"Plan peli", name:"Película 4D y cenita romántica", steps:["Película 4D","Cenita romántica","Billar"]},
+  {kind:"Plan bolos", name:"Bolos y cena romántica", steps:["Bolos","Cena romántica","Billar"]},
+  {kind:"Plan Madrid", name:"Retiro, churros y Cine Doré", steps:["Paseo por el Retiro","Churros","Cine Doré","Billar"]},
+  {kind:"Escapada", name:"Día en Toledo", desc:"Salimos a media mañana.", steps:["Toledo","Comida típica","Casco viejo","Atardecer en el Mirador del Valle","Billar a la vuelta"]}
+];
+const list=document.getElementById('tickets'), go=document.getElementById('go');
+let sel=null; const items=[];
+PLANES.forEach((p,i)=>{
+  const li=document.createElement('li');
+  li.className='ticket'; li.tabIndex=0; li.setAttribute('role','radio'); li.setAttribute('aria-pressed','false');
+  li.innerHTML='<div class="main"><span class="kind"></span><span class="name"></span>'+(p.desc?'<span class="desc"></span>':'')+'<ul class="steps"></ul></div><div class="stub">Nº '+String(i+1).padStart(2,'0')+'</div>';
+  li.querySelector('.kind').textContent=p.kind; li.querySelector('.name').textContent=p.name;
+  if(p.desc) li.querySelector('.desc').textContent=p.desc;
+  const ul=li.querySelector('.steps'); p.steps.forEach(s=>{const x=document.createElement('li'); x.textContent=s; ul.appendChild(x);});
+  const pick=()=>{ sel=i; items.forEach((it,j)=>it.setAttribute('aria-pressed',j===i)); go.disabled=false; go.textContent='Confirmar este plan'; };
+  li.addEventListener('click',pick);
+  li.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();pick();} });
+  items.push(li); list.appendChild(li);
+});
+function texto(){ const p=PLANES[sel]; return 'Para nuestro sábado elijo: '+p.steps.join(' + ')+' ♥'; }
+go.addEventListener('click',()=>{
+  document.getElementById('picked').textContent=PLANES[sel].steps.join(' + ');
+  document.getElementById('wa').href='https://wa.me/?text='+encodeURIComponent(texto());
+  const r=document.getElementById('result'); r.hidden=false; r.scrollIntoView({behavior:'smooth',block:'start'});
+});
+document.getElementById('copy').addEventListener('click',()=>{
+  const m=document.getElementById('copied');
+  if(navigator.clipboard){navigator.clipboard.writeText(texto()).then(()=>m.textContent='Copiado. Pégaselo a Leoncito.').catch(()=>m.textContent=texto());}
+  else m.textContent=texto();
+});
+document.getElementById('again').addEventListener('click',()=>{ document.getElementById('result').hidden=true; list.scrollIntoView({behavior:'smooth'}); });
+</script>
+</body>
+</html>
